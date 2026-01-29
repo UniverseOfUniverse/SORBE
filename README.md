@@ -13,5 +13,11 @@ To address these critical gaps in reasoning evaluation, we propose a principled 
 
 ![Figure1](figure/Figure1.png)
 Figure 1. (A) Comparison between the typical biomedical VQA Benchmark and our SORBE. Our process-oriented scoring evaluates
-verifiable reasoning structure rather than subjective explanation quality. (B) Scores of the three models, GPT-4o, Lingshu-32B, and
-Hulu-32B, on PMC-VQA, MMMU-Med, and our SORBE, respectively
+verifiable reasoning structure rather than subjective explanation quality. (B) Scores of the three models, GPT-4o, Lingshu-32B, and Hulu-32B, on PMC-VQA, MMMU-Med, and our SORBE, respectively.
+
+
+![Figure2](figure/Figure2.png)
+Figure 2. Overview of Benchmark Construction Framework. (A) Contextual Knowledge Extraction, which distills structured
+experimental metadata from unstructured biomedical literature; (B) Reasoning Path Construction, which extracts visual evidence and
+constructs logic chains from images and contextual knowledge; and (C) Question Generation & Filtering, which produces open-ended
+questions and filters out low-quality questions.
