@@ -21,3 +21,27 @@ Figure 2. Overview of Benchmark Construction Framework. (A) Contextual Knowledge
 experimental metadata from unstructured biomedical literature; (B) Reasoning Path Construction, which extracts visual evidence and
 constructs logic chains from images and contextual knowledge; and (C) Question Generation & Filtering, which produces open-ended
 questions and filters out low-quality questions.
+
+---
+
+### Installation
+
+---
+
+Install Python 3.9.25
+
+```
+conda env create -f med_qa_env.yml
+conda activate med_qa_env
+```
+
+Our framework operates on a plug-and-play architecture, allowing for the flexible replacement of any  models. By default, the system is configured as follows: for image-to-text generation via the VLM_PROMPT_TEMPLATE, it utilizes a suite of vision-language models, specifically Qwen3-VL-235B-A22B-Instruct, Lingshu-32B, Hulu-Med-32B, and Fleming-VL-38B. For all other functional steps, Qwen3-235B-A22B-Instruct serves as the primary text-based backbone.
+
+---
+
+### Datasets
+
+---
+
+
+
