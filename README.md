@@ -1,7 +1,17 @@
 Benchmarking the Scientific Mind: Toward Evaluation of Complex-Reasoning Biomedical VQA
 ---
 
-# Introduction
+
+
+### Introduction
+
+---
+
 Despite progress of Multimodal Large Language Models (MLLMs) in biomedical visual question answering (VQA), existing benchmarks provide limited assessment of their scientific reasoning capabilities. Most datasets adopt single-image question construction and outcome-oriented evaluation, where correctness is judged by answer plausibility rather than alignment with experimental evidence. Such formulations fail to capture the evidence-constrained, multi-step nature of biomedical reasoning, and obscure whether models can derive conclusions through causal interpretation of experimental observations.
 
 To address these critical gaps in reasoning evaluation, we propose a principled benchmark construction framework that reconstructs scientific reasoning paths directly from biomedical literature. By jointly modeling clusters of experimentally related images together with their captions and context, the framework generates tightly coupled question–reasoning–answer triples that require multi-image integration and explicit evidence-driven inference. Based on this framework, we introduce SORBE - Scientific Observation Reasoning for Biomedical Evaluation, a large-scale multi-image biomedical VQA benchmark designed to evaluate evidence alignment and multi-step experimental reasoning. Under a process-oriented evaluation metric, state-of-the-art biomedical-specialized MLLMs exhibit substantial performance degradation, revealing systematic limitations in evidence grounding and causal reasoning that are not reflected by existing benchmarks.
+
+![Figure1](figure/Figure1.png)
+Figure 1. (A) Comparison between the typical biomedical VQA Benchmark and our SORBE. Our process-oriented scoring evaluates
+verifiable reasoning structure rather than subjective explanation quality. (B) Scores of the three models, GPT-4o, Lingshu-32B, and
+Hulu-32B, on PMC-VQA, MMMU-Med, and our SORBE, respectively
