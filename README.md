@@ -37,11 +37,77 @@ conda activate med_qa_env
 
 Our framework operates on a plug-and-play architecture, allowing for the flexible replacement of any  models. By default, the system is configured as follows: for image-to-text generation via the VLM_PROMPT_TEMPLATE, it utilizes a suite of vision-language models, specifically Qwen3-VL-235B-A22B-Instruct, Lingshu-32B, Hulu-Med-32B, and Fleming-VL-38B. For all other functional steps, Qwen3-235B-A22B-Instruct serves as the primary text-based backbone.
 
+如果要使用其他模型，请更改每个代码如下的设置：
+
+文本模型的设置，本文默认使用Qwen3-235B-A22B-Instruct
+
+```
+local_text_api_key = "xxx"
+local_text_model = "xxx"
+
+local_text_client = AsyncOpenAI(
+    api_key=local_text_api_key,
+    base_url="xxx", 
+    timeout=120.0
+)
+```
+
+视觉模型设置，本文使用Qwen3-VL-235B-A22B-Instruct, Lingshu-32B, Hulu-Med-32B, and Fleming-VL-38B
+
+```
+local_vl_api_key = "xxx"
+local_vl_model = "xxx"
+
+local_vl_client = AsyncOpenAI(
+    api_key=local_vl_api_key,
+    base_url="xxx", 
+    timeout=120.0
+)
+```
+
 ---
 
 ### Datasets
 
 ---
+
+You can use the `Data\data_final.json` file in the dataset to download a demo of the processed SORBE dataset, which contains 200 data points for you to run subsequent QC, evaluation, and testing code.
+
+---
+
+### Usage
+
+---
+
+Quick Start：你可以使用SORBE\qa_generation中的xxx.ipynb进行qa生成中的每步骤分开实现这个流程中的任何一个流水线，方便您查看每个流水线后的结果。
+
+All run: 要遍历全量数据，需要使用SORBE\qa_generation中的xxxx.py，来进行端到端的生成数据。
+
+---
+
+### Evaluation
+
+---
+
+需要使用SORBE\evaluation中的xxx.py 和xxx.py ，前者可以获得不同模型答案。后者则可以根据逻辑链对不同模型进行测评他们的得分。
+
+---
+
+评测结果
+
+
+
+---
+
+Licese
+
+
+
+引用
+
+
+
+致谢
 
 
 
