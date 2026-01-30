@@ -1,7 +1,5 @@
-# 稍后转为中文
-
-# 这里我认为可以放数据集部分数据
-
-# evaluation和qa_generation需要的数据以及generation_qc可以处理的数据 quickly_start
-
-# quickly_start就是直接200条数据可以用这个仓库内的数据跑起来的 
+data_final.json contains the final generated dataset demo; this data can be used for evaluation and LLM quality control.
+---
+qa_generation_quickly.json contains data used for QA generation; this data corresponds to each data point in data_final.json. Therefore, this data is already biomedical data.
+---
+source_data.json contains the original data, which includes non-biomedical content, and is used for QA generation.
