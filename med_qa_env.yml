@@ -110,4 +110,4 @@ dependencies:
       - typing-extensions==4.15.0
       - typing-inspection==0.4.2
       - tzdata==2025.2
-prefix: /ssd/home/zhaoziyu2024/anaconda3/envs/med_qa_env
+prefix: /ssd
