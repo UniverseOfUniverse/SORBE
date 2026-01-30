@@ -150,11 +150,9 @@ You should limit yourself to purely visual descriptions, avoid adding any explan
 ENHANCED_CAPTION_PROMPT_TEMPLATE = """
 You are an expert biologist and biomedical researcher. You will be given [Context], [Background], [Keywords], and a set of initial [Image_captions].
 
-# Your goal is to generate a "Context_Enhanced_Captions" object. You must process the data in two distinct steps for each image: Verification ([Observation]) and Analysis ([Interpretation]).
+# Your goal is to generate a "Context_Enhanced_Captions" object. You must process the data in a distinct step for each image: Verification ([Observation]).
 
 ## Verification ([Observation]): Rigorously validate the [Image_captions] to correct only factual errors based on [Context] while strictly preserving all non-conflicting visual details, ensuring the output remains a purely descriptive report devoid of any explanatory logic.
-
-## Analysis ([Interpretation]): Synthesize the verified visual observations with [Context], [Background], and [Keywords] to explain the deep biological principles, mechanisms, or pathologies underlying the visual data.
 
 # Input Data
 
@@ -184,15 +182,8 @@ Goal: Correct the [Image_captions] ONLY if they are factually wrong based on the
     * If [Image_captions] mentions a visual detail (e.g., "irregular shape") that is NOT mentioned in [Context], PRESERVE IT. Do not delete valid visual details just because the text doesn't mention them.
 ### Anti-Hallucination Rule**: Do NOT add biological reasoning, causal relationships, or background knowledge into this field. Keep it purely descriptive (shapes, colors, positions ).
 
-# 3. Field: "interpretations" (Biological Reasoning)
-Goal: Explain the biological significance of the verified [Observation] using [Background] and [Context].
-* Use this field to bridge the gap between "what we see" ([Observation]) and "what it means" (Context).
-* Explain the function, process, or pathology visible in the image.
-* Synthesize information from the [Background] to provide depth.
-
-# 4. Summary Generation
+# 3. Summary Generation
 ## [Observation] summary: If there is only one image, provide a concise visual overview of that specific image. If there are multiple images, synthesize the common visual themes across all panels. MUST remain purely descriptive (no reasoning).
-## [Interpretation] summary: If there is only one image, provide a final biological conclusion or diagnosis based on the analysis of the single image. If there are multiple images,   Provide a joint analysis of the overall biological conclusion derived from the combination of these images.
 
 # Output Format
 Provide the final answer as a JSON object with a single root key "Context_Enhanced_Captions".
@@ -207,25 +198,14 @@ Ensure the output is a valid JSON list of strings within the structure, correspo
       "Image 2": "...",
       ...
       "summary": "..."
-    }},
-    "interpretations": {{
-      "Image 1": "...",
-      "Image 2": "...",
-      ...
-      "summary": "..."
     }}
   }}
 }}
 
 # Key Requirements
 1. JSON Validity: The output must be directly parseable by json.loads.
-
-2. Separation of Concerns:
-"[Observation]" = Pure Vision + Contextual Correction (No "because...", No "indicating that...").
-"[Interpretation]" = Vision + Contextual Logic (Explain the "Why").
-3. Context Fidelity: Do not hallucinate details not present in the image or the text.
-4. Count Match: The number of keys in the dictionary must match the number of input images.
-5. Keyword Integration: Utilize the [Keywords] to anchor your terminology in "[Interpretation]", ensuring the specific modality, staining technique, or pathological classification is accurately reflected.
+2. Context Fidelity: Do not hallucinate details not present in the image or the text.
+3. Count Match: The number of keys in the dictionary must match the number of input images.
 
 Generate [Context-Enhanced Captions]: 
 """
@@ -661,7 +641,6 @@ def split_caption_data(item):
     captions_list = item.get("context_enhanced_captions", [])
     summary_data = item.get("context_enhanced_summary", {})
     obs_parts = []
-    int_parts = []
     for entry in captions_list:
         idx = entry.get("image_index")
         f_id = entry.get("fig_id", "")
@@ -672,21 +651,14 @@ def split_caption_data(item):
         if obs and obs != "Not found":
             obs_parts.append(f"{id_prefix} [Image {idx}]: {obs}")
 
-        interp = entry.get("interpretation", "")
-        if interp and interp != "Not found":
-            int_parts.append(f"{id_prefix} [Image {idx}]: {interp}")
-
     if summary_data:
         if summary_data.get("observation_summary"):
             obs_parts.append(
                 f"[Observation Summary]: {summary_data['observation_summary']}"
             )
-        if summary_data.get("interpretation_summary"):
-            int_parts.append(
-                f"[Interpretation Summary]: {summary_data['interpretation_summary']}"
-            )
 
-    return "\n".join(obs_parts), "\n".join(int_parts)
+
+    return "\n".join(obs_parts), ""
 
 
 def extract_visual_info(visual_qa_data):
@@ -966,7 +938,6 @@ async def process_enhanced_caption_gen(item):
         core_data = data.get("Context_Enhanced_Captions", data)
 
         obs_dict = core_data.get("observations", {})
-        interp_dict = core_data.get("interpretations", {})
 
         structured_captions = []
         original_caps = item.get("image_captions", [])
@@ -982,15 +953,13 @@ async def process_enhanced_caption_gen(item):
                 "subfig_label":
                 original_caps[i].get("subfig_label"),
                 "observation":
-                obs_dict.get(key, "Not found"),
-                "interpretation":
-                interp_dict.get(key, "Not found")
+                obs_dict.get(key, "Not found")
             })
 
         item["context_enhanced_captions"] = structured_captions
         item["context_enhanced_summary"] = {
             "observation_summary": obs_dict.get("summary", ""),
-            "interpretation_summary": interp_dict.get("summary", "")
+            
         }
         return item
     except Exception as e:
