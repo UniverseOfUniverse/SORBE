@@ -3,7 +3,7 @@ Benchmarking the Scientific Mind: Toward Evaluation of Complex-Reasoning Biomedi
 
 ### Dataset Curation Statement
 
-The final SORBE benchmark was obtained through expert-led manual curation. Human domain experts reviewed an initial pool of 3,799 candidate QA pairs and excluded 584 samples that did not meet our quality criteria, yielding a final benchmark of 3,215 high-quality QA pairs. Thus, 3,215 refers to the dataset size after manual quality control rather than the number of initially generated samples.
+The final SORBE benchmark was obtained through expert-led manual curation. Human domain experts reviewed an initial pool of 3,799 candidate QA pairs and excluded 584 samples that did not meet our quality criteria, yielding a final benchmark of 3,215 high-quality QA pairs. 
 
 ### Introduction
 
