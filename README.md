@@ -1,5 +1,4 @@
-Benchmarking the Scientific Mind: Toward Evaluation of Complex-Reasoning Biomedical VQA
----
+## Benchmarking the Scientific Mind: A Pathology-Derived Biomedical VQA Benchmark for Complex Scientific Reasoning
 
 ### Dataset Curation Statement
 
