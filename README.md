@@ -1,5 +1,7 @@
 ## Benchmarking the Scientific Mind: A Pathology-Derived Biomedical VQA Benchmark for Complex Scientific Reasoning
 
+🎉 **The SORBE dataset is now available!** Explore [3,215 QA pairs and 9,769 corresponding images](release_data/).
+
 ### Dataset Curation Statement
 
 The final SORBE benchmark was obtained through expert-led manual curation. Human domain experts reviewed an initial pool of 3,799 candidate QA pairs and excluded 584 samples that did not meet our quality criteria, yielding a final benchmark of 3,215 high-quality QA pairs. 
@@ -71,7 +73,7 @@ local_vl_client = AsyncOpenAI(
 
 ---
 
-You can use the `Data\data_final.json` file in the dataset to download a demo of the processed SORBE dataset, which contains 200 data points for you to run subsequent QC, evaluation, and testing code. The complete dataset will be released later.
+The released SORBE dataset contains 3,215 QA pairs in [`release_data/benchmark.json`](release_data/benchmark.json) and 9,769 corresponding images in [`release_data/images/`](release_data/images/). Image paths in the JSON are relative to `release_data/`; the order of each record's `images` array corresponds to its image numbering (e.g., `[Image 1]` refers to the first image).
 
 Below is an example from our dataset.
 
